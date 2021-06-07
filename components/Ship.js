@@ -2,9 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, center, Animated, PanResponder } from 'react-native';
 
 
-function Ship({ center, shipAxe }) {
-    const pan = useState(new Animated.ValueXY())[0];
-
+function Ship({ setLocX, setLocY }) {
+    const [pan, setPan] = useState(new Animated.ValueXY());
 
     const panResponder = useState(
         PanResponder.create({
@@ -32,14 +31,42 @@ function Ship({ center, shipAxe }) {
     const [positionX, setPositionX] = useState(pan.x)
     const [positionY, setPositionY] = useState(pan.y)
     useEffect(() => {
+        let pX = JSON.stringify(pan.x);
+
         setPositionX(pan.x)
         setPositionY(pan.y)
     }, [pan])
-    // console.log('x', positionX)
-    // console.log('y', positionY)
+
+
+    // X -
+    // y |
+
+    const handleTouchEnd = (e) => {
+
+    }
+
+    const handleTouchMove = () => {
+        let pX = JSON.stringify(pan.x);
+        let pY = JSON.stringify(pan.y);
+        pX = parseInt(pX)
+        pY = parseInt(pY)
+        setLocX(pX)
+        setLocY(pY)
+        console.log(pX, pY, pan)
+    }
+
+    const handleTouchStart = () => {
+        // console.log('touchStart')
+    }
+
     return (
         <View style={styles.container}
-            onTouchMove={() => console.log(positionX, positionY, pan)}>
+
+            onTouchStart={(e) => handleTouchStart(e)}
+            onTouchMove={() => handleTouchMove()}
+            onTouchEnd={(e) => handleTouchEnd(e)}
+
+        >
             <Animated.View
                 style={{
                     transform: [{ translateX: pan.x }, { translateY: pan.y }]
