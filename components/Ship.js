@@ -30,9 +30,8 @@ function Ship({ setLocX, setLocY }) {
 
     const [positionX, setPositionX] = useState(pan.x)
     const [positionY, setPositionY] = useState(pan.y)
-    useEffect(() => {
-        let pX = JSON.stringify(pan.x);
 
+    useEffect(() => {
         setPositionX(pan.x)
         setPositionY(pan.y)
     }, [pan])
@@ -52,7 +51,6 @@ function Ship({ setLocX, setLocY }) {
         pY = parseInt(pY)
         setLocX(pX)
         setLocY(pY)
-        console.log(pX, pY, pan)
     }
 
     const handleTouchStart = () => {

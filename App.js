@@ -17,7 +17,7 @@ export default function App() {
 
 
   // useEffect(() => {
-  //   console.log(locX, locY)
+  //   console.log(typeof locX, locY)
   // }, [locX, locY])
 
 
