@@ -5,10 +5,7 @@ import Bullet from './Bullet';
 function GoodBullet({ locX, locY }) {
 
     const [bullet, setBulet] = useState({
-        start: locX,
-        yPoint: locY,
-        current: locX,
-        end: 0,
+        current: parseInt(locX),
     })
 
     const [bulletList, setBulletList] = useState([])
@@ -16,24 +13,34 @@ function GoodBullet({ locX, locY }) {
     const debounceBullet = UseDebounce(() => {
         setBulet(
             {
-                start: locX,
-                yPoint: locY,
-                current: locX,
-                end: 0,
+                current: parseInt(locX)
             })
 
-        if (bulletList.length === 20) {
-            const newList = bulletList.filter((item, index) => index !== 19)
-            setBulletList(newList)
-        } else {
-            setBulletList([...bulletList, bullet])
-        }
+        // if (bulletList.length === 20) {
+        // const newList = bulletList.filter((item, index) => index !== 19)
+
+        // const newList = bulletList.splice(1, 19)
+        // setBulletList(newList)
+        // } else {
+        setBulletList([...bulletList, bullet])
+        // }
 
     }, 50)
 
+    // useEffect(() => {
+    //     debounceBullet()
+    // }, [locX])
+
+    let interval;
+    const [counter, setCounter] = useState(0);
     useEffect(() => {
-        debounceBullet()
-    }, [locX])
+        interval = setInterval(() => {
+            const newCounter = parseInt(counter) + 1;
+            setCounter(newCounter)
+            debounceBullet()
+        }, 100)
+        return () => { clearInterval(interval) }
+    }, [counter])
 
     return (
         bulletList.map((item, index) => {
