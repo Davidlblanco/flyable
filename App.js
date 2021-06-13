@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useRef, useEffect } from 'react';
 import { Dimensions, StyleSheet, Text, View, Animated, PanResponder } from 'react-native';
-import GoodBullet from './components/GoodBullet';
+import BulletList from './components/BulletList';
 import Ship from './components/Ship';
-// import styles from './styles/app'
+import GameContext from './context/GameContext';
 
 export default function App() {
   const screenWidth = Dimensions.get('window').width;
@@ -23,13 +23,17 @@ export default function App() {
 
 
   return (
-    <View style={styles.container} onResponderMove={(evt) => { setLocX(evt.locationX) }}>
 
-      <GoodBullet locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} />
-      <Ship setLocX={setLocX} setLocY={setLocY} />
+    <GameContext.Provider>
+      <View style={styles.container} onResponderMove={(evt) => { setLocX(evt.locationX) }}>
 
-      <StatusBar style="auto" />
-    </View>
+        <BulletList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} />
+        <Ship setLocX={setLocX} setLocY={setLocY} />
+
+        <StatusBar style="auto" />
+      </View>
+    </GameContext.Provider>
+
   );
 }
 const styles = StyleSheet.create({

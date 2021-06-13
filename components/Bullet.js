@@ -1,50 +1,39 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, Animated } from 'react-native';
 
-function Bullet({ item, locY, key }) {
-
-    const screenHeight = Dimensions.get('window').height;
-    // const toTop = useRef(new Animated.Value(locY)).current
+function Bullet({ item, locY, locX, updateBullet }) {
 
 
-    // React.useEffect(() => {
-    //     Animated.timing(
-    //         toTop,
-    //         {
-    //             toValue: -screenHeight,
-    //             duration: 10000,
-    //             useNativeDriver: true
-    //         },
-    //     ).start();
-    // }, [locY])
 
-
-    const [toTop, setToTop] = useState(locY)
+    const [newInitial, setNewInitial] = useState(item.initialX)
+    const [toTop, setToTop] = useState(parseInt(locY))
 
     let interval;
     useEffect(() => {
-        if (toTop > 0) {
-            interval = setInterval(() => {
+        interval = setInterval(() => {
+            updateBullet(item, toTop)
+            if (toTop > 0) {
                 const newToTop = parseInt(toTop) - 10;
                 setToTop(newToTop)
-            }, 100)
-        }
+            }
+            else {
+                setToTop(locY)
+                setNewInitial(locX)
+            }
+
+        }, 100)
         return () => { clearInterval(interval) }
     }, [toTop])
 
 
-    // if (toTop === 0) {
-    //     return null
-    // }
 
     return (
         toTop > 0 ?
             <Animated.View
                 style={[styles.bullet, {
-                    backgroundColor: parseInt(key) % 2 == 0 ? 'red' : 'black',
                     transform: [
-                        { translateX: item.current },
-                        { translateY: toTop }//item.yPoint
+                        { translateX: newInitial },
+                        { translateY: toTop }
                     ]
                 }]}
             >
@@ -67,7 +56,7 @@ const styles = StyleSheet.create({
         height: 10,
         top: 0,
         left: 0,
-        // backgroundColor: 'red',
+        backgroundColor: 'black',
         position: 'absolute',
     },
 });
