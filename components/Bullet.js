@@ -1,8 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Animated } from 'react-native';
 
-function Bullet({ item, locY, locX, updateBullet }) {
+import { Dimensions } from 'react-native';
+function Bullet({ item, locY, locX }) {
 
+
+    const screenWidth = Dimensions.get('window').width;
+    const screenHeight = Dimensions.get('window').height;
 
 
     const [newInitial, setNewInitial] = useState(item.initialX)
@@ -11,7 +15,6 @@ function Bullet({ item, locY, locX, updateBullet }) {
     let interval;
     useEffect(() => {
         interval = setInterval(() => {
-            updateBullet(item, toTop)
             if (toTop > 0) {
                 const newToTop = parseInt(toTop) - 10;
                 setToTop(newToTop)
@@ -24,7 +27,6 @@ function Bullet({ item, locY, locX, updateBullet }) {
         }, 100)
         return () => { clearInterval(interval) }
     }, [toTop])
-
 
 
     return (
@@ -45,12 +47,7 @@ function Bullet({ item, locY, locX, updateBullet }) {
 export default Bullet
 
 const styles = StyleSheet.create({
-    holder: {
-        borderColor: 'green',
-        borderWidth: 1,
-        position: 'absolute'
 
-    },
     bullet: {
         width: 10,
         height: 10,
