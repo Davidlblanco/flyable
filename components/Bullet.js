@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 
 import { Dimensions } from 'react-native';
-function Bullet({ item, locY, locX }) {
+function Bullet({ item, locX }) {
 
-
-    const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
-
-
     const [newInitial, setNewInitial] = useState(item.initialX)
-    const [toTop, setToTop] = useState(screenHeight)
+    const [toTop, setToTop] = useState((screenHeight / 100) * item.position)
 
     let interval;
     useEffect(() => {
@@ -23,11 +19,9 @@ function Bullet({ item, locY, locX }) {
                 setToTop(screenHeight)
                 setNewInitial(locX)
             }
-
-        }, 10)
+        }, 5)
         return () => { clearInterval(interval) }
     }, [toTop])
-
 
     return (
         toTop > 0 ?
@@ -35,9 +29,6 @@ function Bullet({ item, locY, locX }) {
                 style={[styles.bullet, {
                     top: toTop,
                     left: newInitial,
-                    transform: [
-                        { translateX: -5 },
-                    ]
                 }]}
             >
             </Animated.View >
@@ -52,8 +43,6 @@ const styles = StyleSheet.create({
     bullet: {
         width: 10,
         height: 10,
-        // top: 0,
-        // left: 0,
         backgroundColor: 'black',
         position: 'absolute'
 

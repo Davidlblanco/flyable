@@ -6,38 +6,27 @@ function BulletList({ locX, locY }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
-
-    const [counter, setCounter] = useState(0);
-    const [bullet, setBulet] = useState({
-        initialX: parseInt(locX),
-        id: counter,
-        position: 100
-    })
-
+    const [counter, setCounter] = useState(1);
+    const [bullet, setBulet] = useState({})
     const [bulletList, setBulletList] = useState([])
 
-    let interval;
     useEffect(() => {
-        if (counter < 10) {
-
-            interval = setInterval(() => {
-                const newCounter = parseInt(counter) + 1;
-                setCounter(newCounter)
-                setBulet(
-                    {
-                        initialX: parseInt(locX),
-                        id: counter,
-                        position: 100
-                    })
-                setBulletList([...bulletList, bullet])
-            }, 100)
+        if (counter < 11) {
+            const newCounter = parseInt(counter) + 1;
+            setCounter(newCounter)
+            setBulet(
+                {
+                    initialX: parseInt(locX),
+                    id: counter,
+                    position: 100 - (counter * 10)
+                })
+            setBulletList([...bulletList, bullet])
         }
-        return () => { clearInterval(interval) }
     }, [counter])
 
     return (
         <View style={[styles.bulletList, { width: screenWidth, height: screenHeight, top: locY - screenHeight }]}>
-            {
+            {counter === 11 ?
                 bulletList.map((item, index) => {
                     return (
                         <Bullet
@@ -48,7 +37,7 @@ function BulletList({ locX, locY }) {
                         >
                         </Bullet>
                     )
-                })
+                }) : null
             }
         </View >
     )
@@ -59,13 +48,10 @@ export default BulletList
 const styles = StyleSheet.create({
     bulletList: {
         left: 0,
-        backgroundColor: 'green',
         position: 'absolute',
         opacity: .3,
-        // transform: [
-        //     { translateX: -60 }
-        // ]
-    }, bulletListRelative: {
+    },
+    bulletListRelative: {
         position: 'relative',
         width: '100%',
         height: '100%',
