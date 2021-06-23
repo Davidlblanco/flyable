@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import Bullet from './Bullet';
 
 function BulletList({ locX, locY }) {
@@ -11,14 +11,14 @@ function BulletList({ locX, locY }) {
     const [bullet, setBulet] = useState({
         initialX: parseInt(locX),
         id: counter,
-        position: parseInt(locY)
+        position: 100
     })
 
     const [bulletList, setBulletList] = useState([])
 
     let interval;
     useEffect(() => {
-        if (counter < 80) {
+        if (counter < 10) {
 
             interval = setInterval(() => {
                 const newCounter = parseInt(counter) + 1;
@@ -27,7 +27,7 @@ function BulletList({ locX, locY }) {
                     {
                         initialX: parseInt(locX),
                         id: counter,
-                        position: parseInt(locY)
+                        position: 100
                     })
                 setBulletList([...bulletList, bullet])
             }, 100)
@@ -35,22 +35,42 @@ function BulletList({ locX, locY }) {
         return () => { clearInterval(interval) }
     }, [counter])
 
-
     return (
-        bulletList.map((item, index) => {
-            return (
-                <Bullet
-                    key={index}
-                    item={item}
-                    locX={locX}
-                    locY={locY}
-                >
-                </Bullet>
-            )
-
-        })
-
+        <View style={[styles.bulletList, { width: screenWidth, height: screenHeight, top: locY - screenHeight }]}>
+            {
+                bulletList.map((item, index) => {
+                    return (
+                        <Bullet
+                            key={index}
+                            item={item}
+                            locX={locX}
+                            locY={locY}
+                        >
+                        </Bullet>
+                    )
+                })
+            }
+        </View >
     )
 }
 
 export default BulletList
+
+const styles = StyleSheet.create({
+    bulletList: {
+        left: 0,
+        backgroundColor: 'green',
+        position: 'absolute',
+        opacity: .3,
+        // transform: [
+        //     { translateX: -60 }
+        // ]
+    }, bulletListRelative: {
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#000'
+    },
+});

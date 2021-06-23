@@ -10,21 +10,21 @@ function Bullet({ item, locY, locX }) {
 
 
     const [newInitial, setNewInitial] = useState(item.initialX)
-    const [toTop, setToTop] = useState(parseInt(locY))
+    const [toTop, setToTop] = useState(screenHeight)
 
     let interval;
     useEffect(() => {
         interval = setInterval(() => {
             if (toTop > 0) {
-                const newToTop = parseInt(toTop) - 10;
+                const newToTop = parseInt(toTop) - 20;
                 setToTop(newToTop)
             }
             else {
-                setToTop(locY)
+                setToTop(screenHeight)
                 setNewInitial(locX)
             }
 
-        }, 100)
+        }, 10)
         return () => { clearInterval(interval) }
     }, [toTop])
 
@@ -33,9 +33,10 @@ function Bullet({ item, locY, locX }) {
         toTop > 0 ?
             <Animated.View
                 style={[styles.bullet, {
+                    top: toTop,
+                    left: newInitial,
                     transform: [
-                        { translateX: newInitial },
-                        { translateY: toTop }
+                        { translateX: -5 },
                     ]
                 }]}
             >
@@ -51,9 +52,10 @@ const styles = StyleSheet.create({
     bullet: {
         width: 10,
         height: 10,
-        top: 0,
-        left: 0,
+        // top: 0,
+        // left: 0,
         backgroundColor: 'black',
-        position: 'absolute',
+        position: 'absolute'
+
     },
 });
