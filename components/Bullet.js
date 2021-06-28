@@ -12,14 +12,14 @@ function Bullet({ item, locX }) {
     useEffect(() => {
         interval = setInterval(() => {
             if (toTop > 0) {
-                const newToTop = parseInt(toTop) - 20;
+                const newToTop = parseInt(toTop) - 40;
                 setToTop(newToTop)
             }
             else {
                 setToTop(screenHeight)
                 setNewInitial(locX)
             }
-        }, 5)
+        }, 10)
         return () => { clearInterval(interval) }
     }, [toTop])
 

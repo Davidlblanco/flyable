@@ -11,22 +11,21 @@ function BulletList({ locX, locY }) {
     const [bulletList, setBulletList] = useState([])
 
     useEffect(() => {
-        if (counter < 11) {
+        if (counter <= 5) {
             const newCounter = parseInt(counter) + 1;
             setCounter(newCounter)
             setBulet(
                 {
                     initialX: parseInt(locX),
                     id: counter,
-                    position: 100 - (counter * 10)
+                    position: 100 - (counter * 20)
                 })
             setBulletList([...bulletList, bullet])
         }
     }, [counter])
-
     return (
-        <View style={[styles.bulletList, { width: screenWidth, height: screenHeight, top: locY - screenHeight }]}>
-            {counter === 11 ?
+        <View style={[styles.bulletList, { width: screenWidth, height: locY, top: 0 }]}>
+            {
                 bulletList.map((item, index) => {
                     return (
                         <Bullet
@@ -37,7 +36,7 @@ function BulletList({ locX, locY }) {
                         >
                         </Bullet>
                     )
-                }) : null
+                })
             }
         </View >
     )
@@ -47,9 +46,11 @@ export default BulletList
 
 const styles = StyleSheet.create({
     bulletList: {
+        backgroundColor: 'green',
         left: 0,
         position: 'absolute',
         opacity: .3,
+        overflow: 'hidden'
     },
     bulletListRelative: {
         position: 'relative',
