@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import Asteroid from './Asteroid';
 
-function AsteroidList({ locX, locY }) {
+function AsteroidList({ locX, locY,asteroidLoc }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -11,7 +11,7 @@ function AsteroidList({ locX, locY }) {
     const [asteroidList, setAsteroidList] = useState([])
 
     useEffect(() => {
-        if (counter <= 5) {
+        if (counter <= 1) {
             const newCounter = parseInt(counter) + 1;
             setCounter(newCounter)
             setBulet(
@@ -24,6 +24,9 @@ function AsteroidList({ locX, locY }) {
         }
 
     }, [counter])
+
+    // useEffect(()=>{console.log(asteroidList)},[asteroidList])
+
     return (
         <View style={[styles.bulletList, { width: screenWidth, height: screenHeight + 50, top: 0 }]}>
             {
@@ -34,6 +37,7 @@ function AsteroidList({ locX, locY }) {
                             item={item}
                             locX={locX}
                             locY={locY}
+                            asteroidLoc={asteroidLoc}
                         >
                         </Asteroid>
                     )

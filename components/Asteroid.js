@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Animated, Text } from 'react-native';
 
 import { Dimensions } from 'react-native';
-function Asteroid({ item, locX }) {
+function Asteroid({ item, locX,asteroidLoc }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -21,10 +21,10 @@ function Asteroid({ item, locX }) {
                 setNewInitial(Math.random() * (screenWidth - 30))
             }
         }, 500)
+        asteroidLoc({top:toTop ,left:newInitial})
         return () => { clearInterval(interval) }
     }, [toTop])
 
-    // console.log(item.position)
     return (
         toTop > 0 ?
             <Animated.View
@@ -33,7 +33,7 @@ function Asteroid({ item, locX }) {
                     left: newInitial,
                 }]}
             >
-                {/* <Text>{item.position === undefined ? 0 : item.position}</Text> */}
+                {/* <Text>{toTop+' '+newInitial}</Text> */}
             </Animated.View >
             : null
     )

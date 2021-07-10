@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, center, Animated, PanResponder } from 'react-native';
+import React, { useState,  useEffect } from 'react';
+import { StyleSheet, View,  Animated, PanResponder } from 'react-native';
 
 
 function Ship({ setLocX, setLocY }) {
@@ -37,8 +37,6 @@ function Ship({ setLocX, setLocY }) {
     }, [pan])
 
 
-    // X -
-    // y |
 
     const handleTouchEnd = (e) => {
 
@@ -53,14 +51,10 @@ function Ship({ setLocX, setLocY }) {
         setLocY(pY)
     }
 
-    const handleTouchStart = () => {
-        // console.log('touchStart')
-    }
 
     return (
         <View style={styles.container}
 
-            onTouchStart={(e) => handleTouchStart(e)}
             onTouchMove={() => handleTouchMove()}
             onTouchEnd={(e) => handleTouchEnd(e)}
 
