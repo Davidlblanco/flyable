@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import Bullet from './Bullet';
+import Asteroid from './Asteroid';
 
-function BulletList({ locX, locY }) {
+function AsteroidList({ locX, locY }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
     const [counter, setCounter] = useState(1);
     const [bullet, setBulet] = useState({})
-    const [bulletList, setBulletList] = useState([])
+    const [asteroidList, setAsteroidList] = useState([])
 
     useEffect(() => {
         if (counter <= 5) {
@@ -20,22 +20,22 @@ function BulletList({ locX, locY }) {
                     id: counter,
                     position: 100 - (counter * 20)
                 })
-            setBulletList([...bulletList, bullet])
+            setAsteroidList([...asteroidList, bullet])
         }
 
     }, [counter])
     return (
-        <View style={[styles.bulletList, { width: screenWidth, height: locY + 30, top: 0 }]}>
+        <View style={[styles.bulletList, { width: screenWidth, height: screenHeight + 50, top: 0 }]}>
             {
-                bulletList.map((item, index) => {
+                asteroidList.map((item, index) => {
                     return (
-                        <Bullet
+                        <Asteroid
                             key={index}
                             item={item}
                             locX={locX}
                             locY={locY}
                         >
-                        </Bullet>
+                        </Asteroid>
                     )
                 })
             }
@@ -43,11 +43,11 @@ function BulletList({ locX, locY }) {
     )
 }
 
-export default BulletList
+export default AsteroidList
 
 const styles = StyleSheet.create({
     bulletList: {
-        backgroundColor: 'green',
+        backgroundColor: 'yellow',
         left: 0,
         position: 'absolute',
         opacity: .3,

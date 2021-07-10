@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import BulletList from './components/BulletList';
+import AsteroidList from './components/AsteroidList';
 import Ship from './components/Ship';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
 
   return (
     <View style={styles.container} onResponderMove={(evt) => { setLocX(evt.locationX) }}>
+      <AsteroidList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)}></AsteroidList>
 
       <BulletList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} />
       <Ship setLocX={setLocX} setLocY={setLocY} />

@@ -2,24 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Animated, Text } from 'react-native';
 
 import { Dimensions } from 'react-native';
-function Bullet({ item, locX }) {
+function Asteroid({ item, locX }) {
 
+    const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
-    const [newInitial, setNewInitial] = useState(item.initialX)
+    const [newInitial, setNewInitial] = useState(Math.random() * (screenWidth - 30))
     const [toTop, setToTop] = useState((screenHeight / 100) * item.position)
 
     let interval;
     useEffect(() => {
         interval = setInterval(() => {
-            if (toTop > 0) {
-                const newToTop = toTop - 40;
+            if (toTop < screenHeight) {
+                const newToTop = toTop + 40;
                 setToTop(newToTop)
             }
             else {
-                setToTop(screenHeight)
-                setNewInitial(locX)
+                setToTop(0)
+                setNewInitial(Math.random() * (screenWidth - 30))
             }
-        }, 5)
+        }, 500)
         return () => { clearInterval(interval) }
     }, [toTop])
 
@@ -37,13 +38,13 @@ function Bullet({ item, locX }) {
             : null
     )
 }
-export default Bullet
+export default Asteroid
 
 const styles = StyleSheet.create({
 
     bullet: {
-        width: 10,
-        height: 10,
+        width: 30,
+        height: 30,
         backgroundColor: 'black',
         position: 'absolute'
 
