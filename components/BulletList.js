@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,bulletLoc } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import Bullet from './Bullet';
 
-function BulletList({ locX, locY }) {
+function BulletList({ locX, locY, bulletLoc }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -11,7 +11,7 @@ function BulletList({ locX, locY }) {
     const [bulletList, setBulletList] = useState([])
 
     useEffect(() => {
-        if (counter <= 5) {
+        if (counter <= 1) {//5
             const newCounter = parseInt(counter) + 1;
             setCounter(newCounter)
             setBulet(
@@ -34,6 +34,7 @@ function BulletList({ locX, locY }) {
                             item={item}
                             locX={locX}
                             locY={locY}
+                            bulletLoc={bulletLoc}
                         >
                         </Bullet>
                     )

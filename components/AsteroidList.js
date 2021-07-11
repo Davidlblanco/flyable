@@ -11,7 +11,7 @@ function AsteroidList({ locX, locY,asteroidLoc }) {
     const [asteroidList, setAsteroidList] = useState([])
 
     useEffect(() => {
-        if (counter <= 1) {
+        if (counter <= 1) {//5
             const newCounter = parseInt(counter) + 1;
             setCounter(newCounter)
             setBulet(
@@ -25,7 +25,6 @@ function AsteroidList({ locX, locY,asteroidLoc }) {
 
     }, [counter])
 
-    // useEffect(()=>{console.log(asteroidList)},[asteroidList])
 
     return (
         <View style={[styles.bulletList, { width: screenWidth, height: screenHeight + 50, top: 0 }]}>

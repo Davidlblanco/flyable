@@ -11,27 +11,41 @@ export default function App() {
   const [locX, setLocX] = useState(0);
   const [locY, setLocY] = useState(0);
   const [asteroidLoc,setAsteroidLoc]=useState({});
+  const [bulletLoc,setBulletLoc]=useState({});
+ 
   //Game Over
   useEffect(()=>{
     let shipPositionY = locY+screenHeight/2;
     let shipPositionX = locX+screenWidth/2;
-    // console.log(asteroidLoc.left<(shipPositionX+60),asteroidLoc.left>(shipPositionX-60))
     if(
       asteroidLoc.top<(shipPositionY+60)&&asteroidLoc.top>(shipPositionY-60)
       &&
       asteroidLoc.left<(shipPositionX+60)&&asteroidLoc.left>(shipPositionX-60)
       ){
-      console.log('gameover')
+      // console.log('gameover')
     }else{
-      console.log('running')
+      // console.log('running')
     }
   },[locY,locX,asteroidLoc])
   
+ //Bullet Damage
+ useEffect(()=>{
+  if(
+    // bullet hists asteroid
+    asteroidLoc.top<(bulletLoc.top+10)&&asteroidLoc.top>(bulletLoc.top-10)
+    &&
+    asteroidLoc.left<(bulletLoc.left+10)&&asteroidLoc.left>(bulletLoc.left-10)
+    ){
+      // console.log('damage')
+    }else{
+      // console.log('running')
+    }
+  },[asteroidLoc,bulletLoc])
 
   return (
     <View style={styles.container} onResponderMove={(evt) => { setLocX(evt.locationX) }}>
       <AsteroidList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} asteroidLoc={setAsteroidLoc}></AsteroidList>
-      <BulletList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} />
+      <BulletList locX={locX + (screenWidth / 2 - 5)} locY={locY + (screenHeight / 2 - 5)} bulletLoc={setBulletLoc} />
       <Ship setLocX={setLocX} setLocY={setLocY} />
 
       <StatusBar style="auto" />
